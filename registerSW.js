@@ -1,0 +1,1 @@
+if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/Free-Style-Schedule/sw.js', { scope: '/Free-Style-Schedule/' })})}
