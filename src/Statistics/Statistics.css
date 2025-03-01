@@ -1,0 +1,86 @@
+div.App{
+  >div.Statistics_Div{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin: 10px;
+    gap: 10px;
+
+    >div.TaskComparison_Div{
+      position: relative;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 10px;
+      gap: 10px;
+
+      >label{
+        font-size: 1.25rem;
+        font-weight: bold;
+      }
+
+      >button{
+        background-color: transparent;
+        margin-left: auto;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 1.25rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.5s;
+        position: absolute;
+        right: 10px;
+        
+        &:hover{
+          background-color: #4D656C;
+        }
+      }
+      >div.TaskComparisonConfigurations_Div{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        background-color: rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        padding: 10px;
+        gap: 10px;
+      }
+      >svg{
+        margin: 10px 0px;
+      }
+    }
+
+    >div.SlideContainer{
+      display: flex;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+
+      >div.BarGraph_Div{
+        scroll-snap-align: start;
+        flex: 0 0 300px;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        padding: 10px;
+        gap: 10px;
+        width: 100%;
+        margin: 0px 10px;
+        >label{
+          font-size: 1.25rem;
+          font-weight: bold;
+        }
+        >div{
+          display: flex;
+          justify-content: space-evenly;
+          >select{
+            margin: 0px 5px;
+            padding: 5px 10px;
+            border-radius: 10px;
+          }
+        }
+      }  
+
+    }
+  }
+}

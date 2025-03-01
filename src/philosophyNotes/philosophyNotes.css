@@ -1,0 +1,107 @@
+div.App{
+  >div.Philosophy{
+    >div{
+      &.Timeline{
+        >label{
+          font-size: 1.75rem;
+          font-weight: bold;
+          margin-left: 20px;
+        }
+        >svg{
+          width: 100%;
+        }
+      }
+      &.Notes{
+        position: relative;
+        >label{
+          font-size: 1.75rem;
+          font-weight: bold;
+          text-align: center;
+          display: block;
+          margin: 10px;
+        }
+        >button{
+          position: absolute;
+          right: 10px;
+          top: 10px;
+          background-color: rgba(255, 255, 255, 0.1);
+          padding: 5px 10px;
+          border-radius: 10px;
+          color: white;
+          border: none;
+        }
+        >div{
+          &.Grid{
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 5px;
+            width: 90%;
+            >div{
+              background-color: rgba(255, 255, 255, 0.1);
+              padding: 10px;
+              border-radius: 10px;
+              margin: 5px;
+              display: flex;
+              flex-direction: column;
+              flex-wrap: wrap;
+            }
+          }
+          &.Display{
+            display: none;
+            background-color: rgba(255, 255, 255, 0.5);
+            width: 90vw;
+            height: 90vh;
+            position: fixed;
+            left: 50%;
+            top: 10px;
+            transform: translateX(-50%);
+            backdrop-filter: blur(5px);
+            padding: 10px;
+            flex-direction: column;
+            border-radius: 10px;
+            box-shadow: 0 0 10px;
+            text-align: center;
+            border: 1px solid white;
+            overflow: hidden;
+            &.active{
+              display: flex;
+            }
+            >label{
+              color: black;
+            }
+            >button{
+              position: absolute;
+              background-color: transparent;
+              border: none;
+              color: white;
+              padding: 10px;
+              border-radius: 10px;
+              aspect-ratio: 1;
+  
+              &:nth-child(3){
+                left: 0px;
+                top: 0px;
+                background-color: red;
+              }
+              &:nth-child(4){
+                right: 0px;
+                top: 0px;
+                background-color: yellow;
+              }
+              &:nth-child(5){
+                right: 0px;
+                bottom: 0px;
+                background-color: lime;
+              }
+              &:nth-child(6){
+                left: 0px;
+                bottom: 0px;
+                background-color: darkred;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

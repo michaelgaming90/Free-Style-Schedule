@@ -1,0 +1,32 @@
+div.App{
+  >div.Header_Div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 1.25rem;
+    padding-bottom: 10px;
+    position: relative;
+    background: linear-gradient(to right, #344349, #4D656C);
+    overflow: hidden;
+
+    >label {
+      margin-left: 20px;
+      font-size: 2rem;
+      
+      &:nth-child(1) {
+        font-size: 4rem;
+        font-weight: bolder;
+        font-family: monospace;
+        margin-top: 10px;
+      
+      }
+    }
+
+    >img {
+      height: 80%;
+      position: absolute;
+      right: 10px;
+      mix-blend-mode: multiply;
+    }    
+  }
+}

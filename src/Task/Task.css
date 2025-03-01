@@ -1,0 +1,165 @@
+div.App{
+  >div.Task{
+    >div.BarGraph_Div{
+      display: flex;
+      flex-direction: column;
+      margin: 10px;
+      padding: 10px;
+      border-radius: 10px;
+      background-color: rgba(255, 255, 255, 0.1);
+      >label{
+        font-size: 1.25rem;
+        font-weight: bold;
+        text-align: center;
+      }
+    }
+    >div.Timer_Div {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      height: 85vh;
+      display: flex;
+      flex-direction: column;
+      color: white;
+      overflow: hidden;
+      position: relative;
+      margin: 10px;
+      padding: 10px;
+  
+      >label{
+        &:nth-child(1) {
+          text-align: center;
+          padding: 10px;
+          margin-top: 20px;
+          font-size: 2rem;
+          font-weight: bold;
+        }
+  
+        &:nth-child(2) {
+          font-weight: bold;
+          font-family: monospace;
+          text-align: center;
+          font-size: 2rem;
+          color: skyblue;
+          margin-bottom: 0;
+          position: absolute;
+          top: 50%;
+          left: 50%; 
+          transform: translate(-50%, -50%);
+          z-index: 2;
+        }  
+      }
+  
+      >img{
+        background-color: rgba(255, 255, 255, 0.1);
+        padding: 10px;
+        border-radius: 50%;
+        width: 30%;
+        position: absolute;
+        top: 50%;
+        left: 50%; 
+        transform: translate(-50%, -50%);
+        z-index: 1;
+      }
+  
+      >progress{
+        align-self: center;
+        position: absolute;
+        top: 90%;
+      }
+      >svg{
+        top: 10%;
+        left: 5%;
+        transform: translate(-50%, -50%);
+        overflow: visible;
+        position: absolute;
+
+        &.circleContainer{
+          width: 30%;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          overflow: visible;
+          position: absolute;
+        }
+      }
+  
+      >button {
+        &.backButton{
+          position: absolute;
+          top: 10%;
+          left: 10%;
+          background-color: transparent;
+          border: none;
+          font-size: 2rem;
+          font-weight: bold;
+          color: white;
+          cursor: pointer;
+          transition: 0.5s;
+          padding: 10px;
+          border-radius: 10px;
+          
+          &:hover {
+            background-color: #4D656C;
+          }
+    
+          &:active {
+            background-color: blueviolet;
+          }
+        }
+  
+        &.start, &.stop{
+          position: absolute;
+          top: 70%;
+          align-self: center;
+          margin: 10px;
+          border-radius: 10px;
+          border: none;
+          padding: 10px;
+          background-color: cyan;
+          color: white;
+          font-weight: bold;
+          
+        }
+  
+        &.stop{
+          background-color: red;
+          cursor: pointer;
+          transition: 0.5s;
+        }
+  
+        &.arrowButtons{
+          position: absolute;
+          color: white;
+          background-color: transparent;
+          border: none;
+          font-size: 3rem;
+          font-weight: bold;
+          cursor: pointer;
+          transition: 0.5s;
+          padding: 10px;
+          border-radius: 10px;
+          transform: translateY(-50%);
+          
+          &:nth-child(3){
+            left: 10%;
+            top: 50%;
+          }
+    
+          &:nth-child(4){
+            right: 10%;
+            top: 50%;
+          }
+    
+          &:hover {
+            background-color: #4D656C;
+          }
+    
+          &:active {
+            background-color: blueviolet;
+          }
+        }
+      }
+    }
+    
+  }
+}
