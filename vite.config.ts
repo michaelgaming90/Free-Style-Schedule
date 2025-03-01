@@ -12,6 +12,7 @@ export default defineConfig({
         name: "My PWA App",
         short_name: "PWA",
         description: "A Progressive Web App built with Vite",
+        start_url: "/Free-Style-Schedule/",
         theme_color: "#ffffff",
         icons: [
           {
