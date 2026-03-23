@@ -3,6 +3,8 @@ import { Data, Rect } from "../globalEnvironment";
 import './DashBoard.css';
 
 type DashBoardProps = {
+  timeProgress: number[]
+  timeLengths: number[]
   setTaskIndex: React.Dispatch<React.SetStateAction<number>>;
   setIsTaskClicked: React.Dispatch<React.SetStateAction<boolean>>;
   setShowSelections: React.Dispatch<React.SetStateAction<boolean>>;
@@ -47,7 +49,7 @@ function DashBoard(Props: DashBoardProps) {
               }}>
               <img src={sourceImages[index]}></img>
               <label>{task.task}</label>
-              <progress value={1 / Props.data.timers[index].taskTimers.length} max="1" />
+              <progress value={Props.timeProgress[index] / Props.timeLengths[index]} max="1" />
               <button
                 className='EditButtonState'
                 onClick={e => {

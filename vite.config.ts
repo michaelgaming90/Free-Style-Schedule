@@ -9,25 +9,26 @@ export default defineConfig({
     VitePWA({
       registerType: "autoUpdate",
       manifest: {
-        name: "My PWA App",
-        short_name: "PWA",
-        description: "A Progressive Web App built with Vite",
-        start_url: "/Free-Style-Schedule/",
+        name: "Free-Style-Schedule",
+        short_name: "Free-Style-Schedule",
+        description: "A Task",
+        start_url: "/",
         theme_color: "#ffffff",
         icons: [
           {
-            src: "/Free-Style-Schedule/pwa-icon-192.png",
+            src: "/pwa-icon-192.png",
             sizes: "192x192",
             type: "image/png",
           },
           {
-            src: "/Free-Style-Schedule/pwa-icon-512.png",
+            src: "/pwa-icon-512.png",
             sizes: "512x512",
             type: "image/png",
           },
         ],
       },
       workbox: {
+        cleanupOutdatedCaches: true,
         runtimeCaching: [
           {
             urlPattern: ({ request }) => request.destination === "document",
@@ -46,5 +47,5 @@ export default defineConfig({
       },
     }),
   ],
-  base: "/Free-Style-Schedule/",
+  base: "/",
 })

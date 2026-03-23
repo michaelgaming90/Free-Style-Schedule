@@ -29,8 +29,11 @@ function Header(Props: HeaderProps) {
         Props.setShowSelections(prev => !prev);
         Props.setViewSecretNotes(prev => !prev);
       }}
-      >Notes</button>
-      <img src="./Logo.jpg" />
+      >✏️</button>
+      <div>
+        <img src="./Logo.jpg" />
+        <label>Free Style Schedule</label>
+      </div>
   </div>
   );
 }

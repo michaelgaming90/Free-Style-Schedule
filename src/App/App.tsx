@@ -8,8 +8,15 @@ import PhilosophyNotes from '../philosophyNotes/philosophyNotes';
 import './App.css';
 
 const localStorageKey = "Personal-Data";
+const serverUrl = "https://michaelgaming90.github.io/Free-Style-Schedule/";
 
 function App() {
+  const [timeProgress, setTimerProgress] = useState(() => [0, 0, 0, 0]);
+  const [timeLengths, setTimerLengths] = useState(() => [0, 0, 0, 0]);
+  const [isFinished, setIsFinished] = useState(() => false);
+  const [showPassword, setShowPassword] = useState(() => false);
+  const [showDataModification, setShowDataModification] = useState(() => false);
+  const [serverMessageResponse, setServerMessageResponse] = useState(() => "");
   const [viewSecretNotes, setViewSecretNotes] = useState(() => false);
   const [isTaskClicked, setIsTaskClicked] = useState(() => false);
   const [taskIndex, setTaskIndex] = useState(() => 0);
@@ -23,7 +30,18 @@ function App() {
     return Math.floor((new Date().getTime() - new Date(data.statistics.dayRegistered).getTime()) / (24 * 60 * 60 * 1000));
   });
 
+  function generatePassword(length = 16) {
+    const chars =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
+    return Array.from({ length }, () =>
+      chars[Math.floor(Math.random() * chars.length)]
+    ).join("");
+  }
+
   useEffect(() => {
+    setTimerLengths(() => 
+      data.timers.map(timer => timer.originalTimers.length)
+    );
     function getDaysInMonth(date: Date) {
       return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
     }
@@ -36,7 +54,7 @@ function App() {
 
     setData(prev => {
       const dayCount = Math.floor((new Date().getTime() - new Date(data.statistics.dayRegistered).getTime()) / (24 * 60 * 60 * 1000));
-      for (let i = 0; i < dayCount; i++) {
+      for (let i = 0; i <= dayCount; i++) {
         let total = 0;
         const array = prev.statistics.dayTaskScores.map(task =>
           task.scores[i]);
@@ -59,7 +77,7 @@ function App() {
         for (let i = 0; i < weekCount + 1; i++) {
           let total = 0;
           for (let j = 0; j < 7; j++) {
-            if (j + i * 7 >= prev.statistics.dayProgression)
+            if (j + i * 7 >= prev.statistics.dayProgression -1)
               break;
             total += task.scores[j + i * 7];
           }
@@ -95,13 +113,25 @@ function App() {
 
     const secondsInterval = setInterval(() => {
       setData(prev => {
-        const dayCount = Math.floor((new Date().getTime() - new Date(data.statistics.dayRegistered).getTime()) / (24 * 60 * 60 * 1000));
-        if (dayCount < prev.statistics.dayProgression)
+        const getDayCount = Math.floor((new Date().getTime() - new Date(data.statistics.dayRegistered).getTime()) / (24 * 60 * 60 * 1000));
+        
+        setDayCount(() => getDayCount);
+        let array = (prev.statistics.dayTaskScores.map(task => task.scores[getDayCount]))
+        let total = array.reduce((prev, curr) => prev + curr, 0);
+        prev.statistics.dayTotalPointsCompleted[getDayCount] = total;
+
+        prev.statistics.dayTotalPointsCompleted[prev.statistics.dayProgression -1] >= 40? 
+          setIsFinished(() => true) : setIsFinished(() => false);
+
+        if (getDayCount < prev.statistics.dayProgression)
           return prev;
 
+        setIsFinished(() => false);
+        setShowPassword(() => true);
         prev.statistics.dayProgression += 1;
+        prev.password = generatePassword(10);
         prev.timers.forEach(timer => {
-          for (let i = 0; i < 4; i++) {
+          for (let i = 0; i < 5; i++) {
             const randomMinute = Math.floor(Math.random() * 30 + 1) * 60;
             timer.taskTimers.push(randomMinute);
             timer.originalTimers.push(randomMinute);
@@ -110,7 +140,7 @@ function App() {
 
         prev.statistics.dayTaskScores.forEach(task => {
           const prevLenght = task.scores.length;
-          for (let i = 0; i < dayCount - prevLenght + 1; i++)
+          for (let i = 0; i < getDayCount - prevLenght + 1; i++)
             task.scores.push(0);
         })
         return { ...prev };
@@ -143,6 +173,9 @@ function App() {
     if (isTaskClicked)
       return (
         <Task
+          timeLengths={timeLengths}
+          timeProgress={timeProgress}
+          setTimerProgress={setTimerProgress}
           setShowSelections={setShowSelections}
           taskIndex={taskIndex}
           dayCount={dayCount}
@@ -152,6 +185,8 @@ function App() {
         />)
     return (
       <DashBoard
+        timeLengths={timeLengths}
+        timeProgress={timeProgress}
         data={data}
         taskIndex={taskIndex}
         dayCount={dayCount}
@@ -159,6 +194,27 @@ function App() {
         setTaskIndex={setTaskIndex}
         setIsTaskClicked={setIsTaskClicked}
       />)
+  }
+
+  const saveData = async () => {
+    let serverData = await fetch(`${serverUrl}/save`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    const message: string = (await serverData.json()).message;
+    setServerMessageResponse(() => message);
+  };
+
+  const loadData = () => {
+    fetch(`${serverUrl}/load`)
+      .then((res) => res.json())
+      .then((serverData: Data) => {
+        if (serverData.username === "michael90gaming")
+          setServerMessageResponse(() => "Data Loaded");
+        setData(() => serverData);
+      }
+      );
   }
 
   localStorage.setItem(localStorageKey, JSON.stringify(data));
@@ -170,6 +226,12 @@ function App() {
         setShowSelections={setShowSelections}
         setViewSecretNotes={setViewSecretNotes}
       />
+      {isFinished || showPassword? <div className={`PasswordSecret ${showPassword? "show": "hide"}`}>
+        <label>{showPassword? "Password is: ": "Show Password?"}</label>
+        <label> {showPassword? data.password: ""}</label>
+        <button onClick={() => setShowPassword(prev => !prev)}>
+          {showPassword? "Hide" : "Show"}</button>
+      </div>: <></>}
       {showSelections &&
         <>
           <label>Objectives</label>
@@ -187,7 +249,21 @@ function App() {
           </div>
         </>}
       {renderingMenus()}
-
+      <div className={`dataModification ${showDataModification?"hide":"show"}`}>
+        <button 
+          onClick={() => setShowDataModification(prev => !prev)}>
+          {showDataModification? "🫣": "👁️"}
+        </button>
+        {showDataModification &&
+          <>
+            <label>Data Modification</label>
+            <div>
+              <button onClick={saveData}>Save to Server</button>
+              <button onClick={loadData}>Load From Server</button>
+            </div>
+            <label>{serverMessageResponse}</label>
+          </>}
+      </div>
     </div>
   )
 }
