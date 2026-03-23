@@ -8,6 +8,7 @@ type StatisticsProps = {
 };
 
 function Statistics(Props: StatisticsProps) {
+  if (!Props) return(<></>);
   const [allowedTasksToCompare, setAllowedTasksToCompare] = useState<{ task: string; scores: number[] }[]>(() => Props.data.statistics.dayTaskScores);
   const [editTaskComparison, setEditTaskComparison] = useState(() => false);
   const [svgElementComputedRect, setSVGElementComputedRect] = useState<Rect>(() => ({ height: 0, width: 0 }));
@@ -43,24 +44,26 @@ function Statistics(Props: StatisticsProps) {
     const dateStarted = new Date(Props.data.statistics.dayRegistered);
     const numberOfBars = 8;
     const reverseIndices = [6, 5, 4, 3, 2, 1, 0];
-    const weekCount = Math.ceil(Props.dayCount/7);
+    const weekCount = Math.floor(Props.dayCount/7);
 
     for (let i = 0; i < 7; i++) {
       let value = 0;
       let marker = 0;
       switch (graphFrequency) {
         case "Daily":
-          value = Props.data.statistics.dayTotalPointsCompleted[Props.dayCount - i - 1];
-          marker = Props.dayCount - i + 1;
+          if(Props.dayCount - i < 0) break;
+          value = Props.data.statistics.dayTotalPointsCompleted[Props.dayCount - i];
+          marker = Props.dayCount - i;
           break;
         case "Weekly":
           for(let j = 0; j < 7; j++)
           {
-            if((reverseIndices[i]+1)*7 + (weekCount - 7)*7 - j + 1 > Props.dayCount) continue; 
-            value += Props.data.statistics.dayTotalPointsCompleted[(reverseIndices[i]+1)*7 + (weekCount - 7)*7 - j];
+            if (Props.data.statistics.dayTotalPointsCompleted.length > (reverseIndices[i] + weekCount - 6)*7 + j &&
+                (reverseIndices[i] + weekCount - 6)*7 + j >= 0)
+             value += Props.data.statistics.dayTotalPointsCompleted[(reverseIndices[i] + weekCount - 6)*7 + j];
           }
-          marker = reverseIndices[i] + weekCount - 7 + 1;
-          multiplier = 0.2380952380952381;
+          marker = reverseIndices[i] + weekCount - 6;
+          multiplier = 0.2380952380952381
           break;
         case "Monthly":
           if(dateNow.getTime() < dateStarted.getTime()) break;
@@ -149,13 +152,16 @@ function Statistics(Props: StatisticsProps) {
               let value = 0;
               switch (currentGraphFrequency) {
                 case "Day":
+                  if(Props.dayCount < 0) break;
                   value = task.scores[Props.dayCount];
                   break;
                 case "Week":
-                  value = task.weekScores[Math.floor(Props.dayCount / 7)];
+                  if(Props.dayCount < 0) break;
+                  value = task.weekScores[Math.floor(Props.dayCount/7)];
                   break;
                 case "Month":
-                  value = task.monthScores[Math.floor(Props.dayCount / getDaysInMonth(new Date(Props.data.statistics.dayRegistered)))];
+                  if(Props.dayCount < 0) break;
+                  value = task.monthScores[Math.floor(Props.dayCount/ getDaysInMonth(new Date(Props.data.statistics.dayRegistered)))];
                   multiplier = 0.35;
                   break;
               }

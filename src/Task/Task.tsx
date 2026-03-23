@@ -2,7 +2,11 @@ import React, { useEffect, useState, useRef, useMemo } from 'react';
 import { Data, Rect } from "../globalEnvironment";
 import './Task.css';
 
+
 type TaskProps = {
+  timeProgress: number[]
+  setTimerProgress: React.Dispatch<React.SetStateAction<number[]>>
+  timeLengths: number[]
   taskIndex: number;
   dayCount: number;
   data: Data;
@@ -52,7 +56,16 @@ function Task(Props: TaskProps) {
             prev.statistics.dayTaskScores.map((task, index) => {
               if (index !== Props.taskIndex)
                 return task;
-              task.scores[Props.dayCount] += 2;
+
+              task.scores[Props.data.statistics.dayProgression - 1] += 2;
+              Props.setTimerProgress(prev => 
+                prev.map((number, index) => {
+                  if(index !== Props.taskIndex)
+                    return number;
+                  return number +1;
+                  }
+                ));
+
               return task;
             })
         }
@@ -159,7 +172,7 @@ function Task(Props: TaskProps) {
             strokeLinecap="round" />
           <path d="M15 18l-6-6 6-6" />
         </svg>
-        <progress value={1 / Props.data.timers[Props.taskIndex].taskTimers.length} max={1} />
+        <progress value={Props.timeProgress[Props.taskIndex] / Props.timeLengths[Props.taskIndex]} max={1} />
         <audio
           ref={audioElement}
           src="./Alarm.mp3"
@@ -169,29 +182,35 @@ function Task(Props: TaskProps) {
       <div className='BarGraph_Div'>
         <label>Day Task Progress (Bar Graph)</label>
         <svg ref={dailySVGElement}>
-          {Props.data.statistics.dayTaskScores[Props.taskIndex].scores.map((score, index) =>
-            <React.Fragment
-              key={index}>
-              <rect
-                x={svgElementComputedRect.width / 8 * index + 25 + "px"}
-                y={svgElementComputedRect.height - (score * 1.6) + "px"}
-                height={score * 1.6}
-                width={svgElementComputedRect.width / 8}
-                fill='cyan' />
-              <text
-                x={svgElementComputedRect.width / 8 * index + 35 + "px"}
-                y={svgElementComputedRect.height + 20}
-                fill='white'
-              >#{index + 1}
-              </text>
-              <text
-                x={svgElementComputedRect.width / 8 * index + 35 + "px"}
-                y={svgElementComputedRect.height - (score * 1.6) - 5 + "px"}
-                fill='white'
-              >{score}
-              </text>
-            </React.Fragment>)
-          }
+          {new Array(0,0,0,0,0,0,0).map((_, i) => 
+            {
+              const reverseIndices = [6, 5, 4, 3, 2, 1, 0];
+              let index = Props.data.statistics.dayProgression - reverseIndices[i] - 1;
+              let score = 0; 
+              score = index < 0 ? 0 : Props.data.statistics.dayTaskScores[Props.taskIndex].scores[index];
+                return(
+                <React.Fragment
+                  key={i}>
+                  <rect
+                    x={svgElementComputedRect.width / 8 * i + 25 + "px"}
+                    y={svgElementComputedRect.height - (score * 1.6) + "px"}
+                    height={score * 1.6}
+                    width={svgElementComputedRect.width / 8}
+                    fill='cyan' />
+                  <text
+                    x={svgElementComputedRect.width / 8 * i + 35 + "px"}
+                    y={svgElementComputedRect.height + 20}
+                    fill='white'
+                  >#{index}
+                  </text>
+                  <text
+                    x={svgElementComputedRect.width / 8 * i + 35 + "px"}
+                    y={svgElementComputedRect.height - (score * 1.6) - 5 + "px"}
+                    fill='white'
+                  >{score}
+                  </text>
+                </React.Fragment>)
+        })}
 
           <line x1="20" y1="10" x2="20" y2={svgElementComputedRect.height + "px"} stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
           <line x1="20" y1={svgElementComputedRect.height} x2={svgElementComputedRect.width} y2={svgElementComputedRect.height} stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />

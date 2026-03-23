@@ -28,12 +28,12 @@ export type Data = {
 
 export const gData: Data = {
   username: "michael90gaming",
-  password: "",
+  password: "haha",
   age: 17,
   notes: [{
     title: "Yin Yang",
     description: "The duality of opposites",
-    dateModified: "2025-03-01T00:00:00.000Z"
+    dateModified: "2026-03-24T00:00:00.000Z"
   }],
   statistics: {
     goalScore: 0,
@@ -64,7 +64,7 @@ export const gData: Data = {
         monthScores: [0]
       }
     ],
-    dayRegistered: "2025-03-01T00:00:00.000Z",
+    dayRegistered: "2026-02-23T00:00:00.000Z",
     dayTotalPointsCompleted: [0]
   },
   timers: [{
