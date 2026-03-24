@@ -64,7 +64,7 @@ export const gData: Data = {
         monthScores: [0]
       }
     ],
-    dayRegistered: "2026-02-23T00:00:00.000Z",
+    dayRegistered: "2026-03-23T00:00:00.000Z",
     dayTotalPointsCompleted: [0]
   },
   timers: [{
