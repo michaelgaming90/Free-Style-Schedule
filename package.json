@@ -1,7 +1,7 @@
 {
   "name": "my-vite-app",
   "private": true,
-  "homepage": "https://michaelgaming90.github.io/Freestyle-Schedule/",
+  "homepage": "https://michaelgaming90.github.io/Freestyle-Schedule",
   "version": "0.0.0",
   "type": "module",
   "scripts": {

@@ -12,16 +12,16 @@ export default defineConfig({
         name: "Free-Style-Schedule",
         short_name: "Free-Style-Schedule",
         description: "A Task",
-        start_url: "/",
+        start_url: "./",
         theme_color: "#ffffff",
         icons: [
           {
-            src: "/pwa-icon-192.png",
+            src: "./pwa-icon-192.png",
             sizes: "192x192",
             type: "image/png",
           },
           {
-            src: "/pwa-icon-512.png",
+            src: "./pwa-icon-512.png",
             sizes: "512x512",
             type: "image/png",
           },
@@ -47,5 +47,5 @@ export default defineConfig({
       },
     }),
   ],
-  base: "/",
+  base: "./",
 })

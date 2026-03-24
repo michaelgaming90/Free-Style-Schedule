@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Data, gData } from "../globalEnvironment";
+import { Data, gData, tempData } from "../globalEnvironment";
 import DashBoard from '../DashBoard/DashBoard';
 import Task from '../Task/Task';
 import Statistics from '../Statistics/Statistics';
@@ -8,9 +8,10 @@ import PhilosophyNotes from '../philosophyNotes/philosophyNotes';
 import './App.css';
 
 const localStorageKey = "Personal-Data";
-const serverUrl = "https://michaelgaming90.github.io/Free-Style-Schedule/";
+const serverUrl = "http://localhost:3000";
 
 function App() {
+  const [passwordIndex, setPasswordIndex] = useState(() => 0);
   const [timeProgress, setTimerProgress] = useState(() => [0, 0, 0, 0]);
   const [timeLengths, setTimerLengths] = useState(() => [0, 0, 0, 0]);
   const [isFinished, setIsFinished] = useState(() => false);
@@ -24,7 +25,7 @@ function App() {
   const [showSelections, setShowSelections] = useState(() => true);
   const [data, setData] = useState<Data>(() => {
     let localStorageData = localStorage.getItem(localStorageKey);
-    return localStorageData ? JSON.parse(localStorageData) : gData;
+    return localStorageData ? JSON.parse(localStorageData) : tempData;
   });
   const [dayCount, setDayCount] = useState(() => {
     return Math.floor((new Date().getTime() - new Date(data.statistics.dayRegistered).getTime()) / (24 * 60 * 60 * 1000));
@@ -129,7 +130,7 @@ function App() {
         setIsFinished(() => false);
         setShowPassword(() => true);
         prev.statistics.dayProgression += 1;
-        prev.password = generatePassword(10);
+        prev.passwords.push(generatePassword(10));
         prev.timers.forEach(timer => {
           for (let i = 0; i < 5; i++) {
             const randomMinute = Math.floor(Math.random() * 30 + 1) * 60;
@@ -213,6 +214,7 @@ function App() {
         if (serverData.username === "michael90gaming")
           setServerMessageResponse(() => "Data Loaded");
         setData(() => serverData);
+        localStorage.setItem(localStorageKey, JSON.stringify(serverData));
       }
       );
   }
@@ -227,10 +229,28 @@ function App() {
         setViewSecretNotes={setViewSecretNotes}
       />
       {isFinished || showPassword? <div className={`PasswordSecret ${showPassword? "show": "hide"}`}>
-        <label>{showPassword? "Password is: ": "Show Password?"}</label>
-        <label> {showPassword? data.password: ""}</label>
+        <label>{showPassword? `Password is: `: "Show Password?"}</label>
+        <label>{showPassword? `ID: ${passwordIndex} `: ""}</label>
+        <label> {showPassword? data.passwords[passwordIndex] : ""}</label>
         <button onClick={() => setShowPassword(prev => !prev)}>
           {showPassword? "Hide" : "Show"}</button>
+          <button className={`left ${showPassword? "show" : "hide"}`}
+            onClick={() => {
+            setPasswordIndex(prev => {
+              prev -= 1;
+              prev = prev < 0 ? data.passwords.length - 1 : prev;
+              return prev;
+            })}}> {"<"}
+          </button>
+          <button className={`right ${showPassword? "show" : "hide"}`}
+            onClick={() => {
+            setPasswordIndex(prev => {
+              prev += 1;
+              prev = prev < data.passwords.length ? prev : 0;
+              return prev;
+            })}}>
+              {">"}
+          </button>
       </div>: <></>}
       {showSelections &&
         <>

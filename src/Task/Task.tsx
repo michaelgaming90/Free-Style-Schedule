@@ -187,14 +187,15 @@ function Task(Props: TaskProps) {
               const reverseIndices = [6, 5, 4, 3, 2, 1, 0];
               let index = Props.data.statistics.dayProgression - reverseIndices[i] - 1;
               let score = 0; 
+              const multiplier = 5;
               score = index < 0 ? 0 : Props.data.statistics.dayTaskScores[Props.taskIndex].scores[index];
                 return(
                 <React.Fragment
                   key={i}>
                   <rect
                     x={svgElementComputedRect.width / 8 * i + 25 + "px"}
-                    y={svgElementComputedRect.height - (score * 1.6) + "px"}
-                    height={score * 1.6}
+                    y={svgElementComputedRect.height - (score * multiplier) + "px"}
+                    height={score * multiplier}
                     width={svgElementComputedRect.width / 8}
                     fill='cyan' />
                   <text
@@ -205,7 +206,7 @@ function Task(Props: TaskProps) {
                   </text>
                   <text
                     x={svgElementComputedRect.width / 8 * i + 35 + "px"}
-                    y={svgElementComputedRect.height - (score * 1.6) - 5 + "px"}
+                    y={svgElementComputedRect.height - (score * multiplier) - 5 + "px"}
                     fill='white'
                   >{score}
                   </text>

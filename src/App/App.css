@@ -17,6 +17,19 @@ div.App {
     border-radius: 10px;
     align-items: center;
 
+    >button.left, >button.right{
+      padding: 5px 10px;
+      border-radius: 10px;
+      border: none;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+
+      &.hide{
+        display: none;
+      }
+    }
+
     &.show{
       display: flex;
       flex-direction: column;
@@ -32,20 +45,29 @@ div.App {
       >label:nth-child(1){
         font-size: 48px;
       }
-      >label:nth-child(2){
-        font-size: 24px;
+      >label{
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-size: 36px;
       }
+
+      
       >button{
         padding: 10px 20px;
         border-radius: 10px;
         border: none;
         background-color: red;
-        &.show{
-          background-color: greenyellow;
-        }
+
+      &.left{
+        background-color: white;
+        left: 10px;
+      }
+
+      &.right{
+        background-color: white;
+        right: 10px;
+      }
       }
     }
-    
   }
 
   >div.dataModification {
