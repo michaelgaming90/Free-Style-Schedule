@@ -12,7 +12,7 @@ export default defineConfig({
         name: "Free-Style-Schedule",
         short_name: "Free-Style-Schedule",
         description: "A Task",
-        start_url: "/",
+        start_url: "/Free-Style-Schedule/",
         theme_color: "#ffffff",
         icons: [
           {
