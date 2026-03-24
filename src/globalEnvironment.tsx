@@ -106,7 +106,7 @@ export const tempData: Data = {
     dayTaskScores: [
       {
         task: "Study",
-        scores: [8],
+        scores: [10],
         weekScores: [0],
         monthScores: [0]
       },
@@ -118,25 +118,25 @@ export const tempData: Data = {
       },
       {
         task: "Health",
-        scores: [8],
+        scores: [10],
         weekScores: [0],
         monthScores: [0]
       },
       {
         task: "Meditation",
-        scores: [0],
+        scores: [10],
         weekScores: [0],
         monthScores: [0]
       }
     ],
     dayRegistered: "2026-03-24T00:00:00.000Z",
-    dayTotalPointsCompleted: [26]
+    dayTotalPointsCompleted: [40]
   },
   timers: [
     {
-      originalTimers: [1500],
+      originalTimers: [],
       task: "Study",
-      taskTimers: [1500]
+      taskTimers: []
     },
     {
       originalTimers: [],
@@ -144,14 +144,14 @@ export const tempData: Data = {
       taskTimers: []
     },
     {
-      originalTimers: [1680],
+      originalTimers: [],
       task: "Health",
-      taskTimers: [1680]
+      taskTimers: []
     },
     {
-      originalTimers: [1080, 240, 240, 480, 660],
+      originalTimers: [],
       task: "Meditation",
-      taskTimers: [1080, 240, 240, 480, 660]
+      taskTimers: []
     }
   ]
 }

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Data, gData, tempData } from "../globalEnvironment";
+import { Data, tempData } from "../globalEnvironment";
 import DashBoard from '../DashBoard/DashBoard';
 import Task from '../Task/Task';
 import Statistics from '../Statistics/Statistics';
@@ -33,7 +33,7 @@ function App() {
 
   function generatePassword(length = 16) {
     const chars =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
+      "0123456789";
     return Array.from({ length }, () =>
       chars[Math.floor(Math.random() * chars.length)]
     ).join("");
