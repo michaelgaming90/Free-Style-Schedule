@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Data, tempData } from "../globalEnvironment";
+import { Data, gData } from "../globalEnvironment";
 import DashBoard from '../DashBoard/DashBoard';
 import Task from '../Task/Task';
 import Statistics from '../Statistics/Statistics';
@@ -25,7 +25,7 @@ function App() {
   const [showSelections, setShowSelections] = useState(() => true);
   const [data, setData] = useState<Data>(() => {
     let localStorageData = localStorage.getItem(localStorageKey);
-    return localStorageData ? JSON.parse(localStorageData) : tempData;
+    return localStorageData ? JSON.parse(localStorageData) : gData;
   });
   const [dayCount, setDayCount] = useState(() => {
     return Math.floor((new Date().getTime() - new Date(data.statistics.dayRegistered).getTime()) / (24 * 60 * 60 * 1000));

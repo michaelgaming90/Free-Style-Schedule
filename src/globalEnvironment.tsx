@@ -27,7 +27,7 @@ export type Data = {
 }
 
 export const gData: Data = {
-  username: "michael90gaming",
+  username: "riel",
   passwords: [],
   age: 17,
   notes: [{
@@ -46,7 +46,7 @@ export const gData: Data = {
         monthScores: [0]
       },
       {
-        task: "Work",
+        task: "Workout",
         scores: [0],
         weekScores: [0],
         monthScores: [0]
@@ -64,7 +64,7 @@ export const gData: Data = {
         monthScores: [0]
       }
     ],
-    dayRegistered: "2026-03-24T00:00:00.000Z",
+    dayRegistered: "2026-07-03T00:00:00.000Z",
     dayTotalPointsCompleted: [0]
   },
   timers: [{
@@ -90,14 +90,14 @@ export const gData: Data = {
 }
 
 export const tempData: Data = {
-  username: "michael90gaming",
-  passwords: ["yq1Dyllwv*"],
+  username: "riel",
+  passwords: [],
   age: 18,
   notes: [
     {
       title: "Yin Yang",
       description: "The duality of opposites",
-      dateModified: "2026-03-24T00:00:00.000Z"
+      dateModified: "2026-07-03T00:00:00.000Z"
     }
   ],
   statistics: {
